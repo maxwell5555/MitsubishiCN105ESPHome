@@ -637,7 +637,9 @@ void CN105Climate::set_remote_temperature(float setting) {
         ESP_LOGD(LOG_REMOTE_TEMP, "setting remote temperature to %f", this->remoteTemperature_);
     } else {
         // Same temperature, just reset the timeout watchdog
-        this->pingExternalTemperature();
+        // Local hotfix
+        this->remoteTemperature_ = setting;
+        this->shouldSendExternalTemperature_ = true;
         ESP_LOGD(LOG_REMOTE_TEMP, "Remote temperature unchanged, resetting timeout.");
     }
 }
